@@ -1,3 +1,4 @@
+/*jslint esversion:6 */
 const fs = require('fs');
 const morgan = require('morgan');
 

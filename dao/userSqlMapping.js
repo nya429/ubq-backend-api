@@ -1,9 +1,9 @@
+/*jslint esversion:6 */
 const user = {
-  inserttest:'INSERT INTO user(password, email, role) VALUES(0,\'song@test.com\',1)',
-	insert:'INSERT INTO user(id, name, age) VALUES(0,?,?)',
-	update:'update user set name=?, age=? where id=?',
-	delete: 'delete from user where id=?',
-	queryById: 'select * from user where id=?',
+	insert:'INSERT INTO user(email, password, create_time, update_time) VALUES(?,?,?,?)',
+	update:'update user set first_name=?, last_name=? where user_id=?',
+	delete: 'delete from user where user_id=?',
+	queryById: 'select * from user where user_id=?',
 	queryAll: 'select * from user'
 };
 
