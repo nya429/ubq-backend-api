@@ -14,13 +14,16 @@ const userService = {
     return [email, lastName, firstName, role, vendorId, password, current, current];
   },
 
-
   update: function(param, userId)  {
-    console.log(userId);
     const lastName = param.lastName;
     const firstName = param.firstName;
     const current = Date.now();
     return [firstName, lastName, current, userId];
+  },
+
+  getAll: function(result, count) {
+    if (!result) return;
+    return {users: result, count: count}
   }
 };
 

@@ -1,6 +1,6 @@
 const CONST = {
   SUCCESS: 0,
-  FAILL: 1,
+  FAIL: 1,
 };
 
 module.exports = CONST;

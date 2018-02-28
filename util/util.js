@@ -1,23 +1,23 @@
 const CONST = require('./constant')/*jslint esversion:6 */
+const logger = require('../log/logger');
 
-
-const jsonWrite = function (res, ret, msg) {
-	if(typeof ret === 'undefined') {
-    // Delete console when deployed
-    console.log(msg);
+const jsonWrite = function (res, rst, err) {
+	if(typeof rst === 'undefined') {
+    // Delete msg  when deployed
+    console.log(err);
 		res.json({
-			code:CONST.FAIL,
-			msg: msg
+			code: CONST.FAIL,
+			msg: err
 		});
 	} else {
-    if(ret) {
-      ret = {
-          code: CONST.SUCCESS,
-          msg:'success',
-					data: ret
-        };
-      }
-		res.json(ret);
+    if(rst) {
+      rst = {
+		          code: 0,
+							msg:'success',
+							data: rst
+             };
+		 }
+		res.json(rst);
 	}
 };
 
