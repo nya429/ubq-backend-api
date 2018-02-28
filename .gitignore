@@ -7,7 +7,7 @@
 
 # dependencies
 node_modules/
-log/access.log
+./log/access.log
 
 # IDEs and editors
 /.idea
