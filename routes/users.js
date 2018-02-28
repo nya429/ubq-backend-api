@@ -1,11 +1,11 @@
-var express = require('express');
-var router = express.Router({mergeParams: true});
+const express = require('express');
+const router = express.Router({mergeParams: true});
 
-var userDao = require('../dao/userDao');
-
+const userDao = require('../dao/userDao');
+const userService = require('../dao/userService');
 // add user
-router.get('/addUser', function(req, res, next) {
-	userDao.add(req, res, next);
+router.post('/', function(req, res, next) {
+	userService.add(req, res, next);
 });
 
 router.get('/', function(req, res, next) {

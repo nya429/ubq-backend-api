@@ -7,8 +7,8 @@ const bodyParser = require('body-parser');
 
 // var routes = require('./routes/index');
 const users = require('./routes/users');
-const  logger = require('./log/logger');
-var app = express();
+const logger = require('./log/logger');
+const app = express();
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -28,7 +28,7 @@ app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });

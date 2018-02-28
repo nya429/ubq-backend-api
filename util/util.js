@@ -1,23 +1,24 @@
-/*jslint esversion:6 */
+const CONST = require('./constant')/*jslint esversion:6 */
+
+
 const jsonWrite = function (res, ret, msg) {
 	if(typeof ret === 'undefined') {
-        // Delete console when deployed
-        console.log(msg);
+    // Delete console when deployed
+    console.log(msg);
 		res.json({
-			code:'1',
+			code:CONST.FAIL,
 			msg: msg
 		});
 	} else {
-        console.log(err);
-        if(ret) {
-            ret = {
-                code: 200,
-                msg:'success',
-            };
-        }
+    if(ret) {
+      ret = {
+          code: CONST.SUCCESS,
+          msg:'success',
+					data: ret
+        };
+      }
 		res.json(ret);
 	}
 };
-
 
 module.exports = { jsonWrite };
