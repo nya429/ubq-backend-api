@@ -1,0 +1,1 @@
+::1 - - [28/Feb/2018:05:57:32 +0000] "GET /company/list?pg=1 HTTP/1.1" 200 5850 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
