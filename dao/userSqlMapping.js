@@ -5,7 +5,7 @@ const user = {
 	delete: 'delete from user where user_id=?',
 	queryById: 'select * from user where user_id=?',
 	queryAll: 'select * from user',
-	queryCnt: 'select count(*) from user'
+	queryAllCnt: 'select count(*) from user'
 };
 
 module.exports = user;

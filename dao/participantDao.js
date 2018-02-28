@@ -3,8 +3,8 @@ const mysql = require('mysql');
 
 const $conf = require('../conf/mysql');
 const { jsonWrite } = require('../util/util');
-const $sql = require('./companySqlMapping');
-const $service = require('./companyService');
+const $sql = require('./participantSqlMapping');
+const $service = require('./participantService');
 const CONST = require('../util/constant');
 
 const pool  = mysql.createPool($conf.mysql);
@@ -61,6 +61,23 @@ module.exports = {
 				const count = result[0]['count(*)'];
 				connection.query($sql.queryAll, function(err, result) {
           result = $service.getList(result, count, page, limit);
+					jsonWrite(res, result, err);
+					connection.release();
+				});
+			})
+		});
+	},
+
+
+  getByParticipantById: function (req, res, next) {
+		pool.getConnection(function(err, connection) {
+				let companyId = req.query.companyId;
+				const page = req.query.pg || 1;
+				const limit = req.query.ltd || CONST.PAGE_LIMIT ;
+				connection.query($sql.queryByCidCnt, companyId, function(err, result) {
+				const count = result[0]['count(*)'];
+				connection.query($sql.queryByCid, companyId, function(err, result) {
+					result = $service.getList(result, count, page, limit);
 					jsonWrite(res, result, err);
 					connection.release();
 				});

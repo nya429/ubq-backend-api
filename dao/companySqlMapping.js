@@ -5,7 +5,8 @@ const company = {
 	delete: 'delete from company where company_id=?',
 	queryById: 'select * from company where company_id=?',
 	queryAll: 'select * from company',
-	queryCnt: 'select count(*) from company'
+	queryAllCnt: 'select count(*) from company',
+	queryByKeyword: "select * from company where (name like ?) or (contact_name like ?) or (address like ?)"
 };
 
 module.exports = company;

@@ -13,7 +13,7 @@ const jsonWrite = function (res, rst, err) {
     if(rst) {
       rst = {
 		          code: 0,
-							msg:'success',
+							msg: 'success',
 							data: rst
              };
 		 }

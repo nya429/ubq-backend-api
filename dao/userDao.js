@@ -16,6 +16,7 @@ module.exports = {
 	add: function (req, res, next) {
 			pool.getConnection(function(err, connection) {
 				const param = req.body;
+				console.log($service.addOne(param));
 				connection.query($sql.insert, $service.addOne(param), function(err, result) {
 					jsonWrite(res, result, err);
 					connection.release();
@@ -57,7 +58,7 @@ module.exports = {
 
 	getAll: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
-			connection.query($sql.queryCnt, function(err, result) {
+			connection.query($sql.queryAllCnt, function(err, result) {
 				const count = result[0]['count(*)'];
 				connection.query($sql.queryAll, function(err, result) {
 					result = $service.getAll(result, count);

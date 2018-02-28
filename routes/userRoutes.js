@@ -5,7 +5,7 @@ const userDao = require('../dao/userDao');
 
 // add user
 router.post('/new', function(req, res, next) {
-	userService.add(req, res, next);
+	userDao.add(req, res, next);
 });
 
 router.get('/', function(req, res, next) {

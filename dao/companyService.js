@@ -24,9 +24,9 @@ module.exports = {
 				return [name, info, address, contactName, contactPhone, avatarUri, current, companyId];
 	},
 
-	getAll: function (result, count, pg, limit) {
+	getList: function (result, count, pg, limit) {
 		if (!result) return;
-    return {users: result, count: count, page: pg, limit: limit}
+    return {companies: result, count: count, page: pg, limit: limit}
 	}
 
 
