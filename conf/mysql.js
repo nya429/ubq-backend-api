@@ -1,20 +1,20 @@
 /*jslint esversion:6 */
 const mysql = require('mysql');
-const conf = {mysql: {
-  connectionLimit : 10,
-  host     : 'localhost',
-  user     : 'root',
-  database : 'ubq_ems_db',
-  password : 'bsg'
-}};
-
 // const conf = {mysql: {
 //   connectionLimit : 10,
 //   host     : 'localhost',
 //   user     : 'root',
 //   database : 'ubq_ems_db',
-//   password : '8888'
+//   password : 'bsg'
 // }};
+
+const conf = {mysql: {
+  connectionLimit : 10,
+  host     : 'localhost',
+  user     : 'root',
+  database : 'ubq_ems_db',
+  password : '8888'
+}};
 
 module.exports = conf;
 

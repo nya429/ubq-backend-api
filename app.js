@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const users = require('./routes/userRoutes');
 const companys = require('./routes/companyRoutes');
 const participants = require('./routes/participantRoutes');
+const vendors = require('./routes/vendorRoutes');
 const logger = require('./log/logger');
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(logger);
 app.use('/user', users);
 app.use('/company', companys);
 app.use('/participant', participants);
+app.use('/vendor', vendors);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
