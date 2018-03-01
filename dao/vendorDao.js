@@ -74,7 +74,7 @@ module.exports = {
 				// key.replace("[", "[[]").replace("_","[_]").replace("%","[%]");
 				const page = req.query.pg || 1;
 				const limit = req.query.ltd || CONST.PAGE_LIMIT ;
-				connection.query($sql.queryAllCnt, function(err, result) {
+				connection.query($sql.queryByKeywordCnt, [key, key, key], function(err, result) {
 				const count = result[0]['count(*)'];
 				connection.query($sql.queryByKeyword, [key, key, key], function(err, result) {
 					result = $service.getList(result, count, page, limit);

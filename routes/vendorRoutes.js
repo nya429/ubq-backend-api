@@ -8,8 +8,12 @@ router.post('/new', function(req, res, next) {
 	vendorDao.add(req, res, next);
 });
 
-router.get('/', function(req, res, next) {
+router.get('/list？', function(req, res, next) {
 	vendorDao.getAll(req, res, next);
+});
+
+router.get('/search?', function(req, res, next) {
+	vendorDao.searchByKeyword(req, res, next);
 });
 
 router.get('/:id', function(req, res, next) {

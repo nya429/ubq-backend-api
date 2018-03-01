@@ -8,7 +8,6 @@ router.post('/new', function(req, res, next) {
 });
 
 router.get('/search?', function(req, res, next) {
-	console.log('here')
 	companyDao.searchByKeyword(req, res, next);
 });
 
