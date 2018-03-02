@@ -6,7 +6,7 @@ const company = {
 	queryById: 'select * from company where company_id=?',
 	queryAll: 'select * from company',
 	queryAllCnt: 'select count(*) from company',
-	queryByKeyword: "select * from company where (name like ?) or (contact_name like ?) or (address like ?)"
+	queryByKeyword: "select * from company where (name like ?) or (contact_name like ?) or (address like ?)",
 };
 
 module.exports = company;

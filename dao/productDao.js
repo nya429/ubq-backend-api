@@ -3,9 +3,8 @@ const mysql = require('mysql');
 
 const $conf = require('../conf/mysql');
 const { jsonWrite } = require('../util/util');
-const $sql = require('./companySqlMapping');
-const $pSql = require('./participantSqlMapping');
-const $service = require('./companyService');
+const $sql = require('./productSqlMapping');
+const $service = require('./productService');
 const CONST = require('../util/constant');
 
 const pool  = mysql.createPool($conf.mysql);
@@ -37,12 +36,9 @@ module.exports = {
 		pool.getConnection(function(err, connection) {
 			const id = +req.params.id;
 			connection.query($sql.queryById, id, function(err, result) {
-				let companyInfo = result[0];
-				connection.query($pSql.queryByCidCnt, id, function(err, result) {
-					companyInfo['participantCnt'] = result[0]['count(*)'];
-					jsonWrite(res, companyInfo, err);
-					connection.release();
-				});
+				result = result[0]
+				jsonWrite(res, result, err);
+				connection.release();
 			});
 		});
 	},
@@ -65,6 +61,23 @@ module.exports = {
 				const count = result[0]['count(*)'];
 				connection.query($sql.queryAll, function(err, result) {
           result = $service.getList(result, count, page, limit);
+					jsonWrite(res, result, err);
+					connection.release();
+				});
+			})
+		});
+	},
+
+
+  getByproductById: function (req, res, next) {
+		pool.getConnection(function(err, connection) {
+				let companyId = req.query.companyId;
+				const page = req.query.pg || 1;
+				const limit = req.query.ltd || CONST.PAGE_LIMIT ;
+				connection.query($sql.queryByCidCnt, companyId, function(err, result) {
+				const count = result[0]['count(*)'];
+				connection.query($sql.queryByCid, companyId, function(err, result) {
+					result = $service.getList(result, count, page, limit);
 					jsonWrite(res, result, err);
 					connection.release();
 				});
