@@ -14,6 +14,13 @@ const products = require('./routes/productRoutes');
 const logger = require('./log/logger');
 const app = express();
 
+const allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PATCH,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 
@@ -22,6 +29,8 @@ app.use(bodyParser.json());
 // use qs to parse
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(allowCrossDomain);
+app.use(express.static(__dirname + '/public'));
 // output log
 app.use(logger);
 // app.use(express.static(path.join(__dirname, 'public')));

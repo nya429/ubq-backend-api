@@ -24,6 +24,6 @@ module.exports = {
 
 	getList: function (result, count, pg, limit) {
 		if (!result) return;
-    return {companies: result, count: count, page: pg, limit: limit}
+    return {products: result, count: count, page: pg, limit: limit}
 	}
 };
