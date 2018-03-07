@@ -35,5 +35,9 @@ module.exports = {
 	getList: function (result, count, pg, limit) {
 		if (!result) return;
     return {participants: result, count: count, page: pg, limit: limit}
+	},
+
+	getOpts: function (limit, offset) {
+		return [limit, offset]
 	}
 };

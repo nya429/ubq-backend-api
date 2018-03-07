@@ -55,12 +55,15 @@ module.exports = {
 
 	getAll: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
-			const page = req.query.pg || 1;
-			const limit = req.query.ltd || CONST.PAGE_LIMIT  ;
+
+			const page = req.query.pg ? +req.query.pg : 1;
+			const limit = req.query.ltd ? +req.query.ltd : CONST.PAGE_LIMIT;
+			console.log(page);
 			connection.query($sql.queryAllCnt, function(err, result) {
 				const count = result[0]['count(*)'];
-				connection.query($sql.queryAll, function(err, result) {
+				connection.query($sql.queryAll, $service.getOpts(limit, page), function(err, result) {
           result = $service.getList(result, count, page, limit);
+					console.log(result);
 					jsonWrite(res, result, err);
 					connection.release();
 				});
