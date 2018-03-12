@@ -7,7 +7,7 @@ const CONST = {
   /**
   *@const pagination
   */
-  PAGE_LIMIT: 5,
+  PAGE_LIMIT: 10,
 
 };
 

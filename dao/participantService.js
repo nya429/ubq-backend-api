@@ -32,12 +32,12 @@ module.exports = {
 				return [companyId, tagId, firstName, lastName, companyName, jobTitle, email, phone, avatarUri, priorityStatus, current, participantId];
 	},
 
-	getList: function (result, count, pg, limit) {
+	getList: function (result, count, offset, limit) {
 		if (!result) return;
-    return {participants: result, count: count, page: pg, limit: limit}
+    return {participants: result, count: count, offset: offset, limit: limit}
 	},
 
-	getOpts: function (limit, offset) {
-		return [limit, offset]
+	getOpts: function (limit, offset, orderer, ) {
+		return orderer ? [orderer, limit, offset] : [limit, offset];
 	}
 };

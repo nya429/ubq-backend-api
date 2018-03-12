@@ -56,14 +56,17 @@ module.exports = {
 	getAll: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
 
-			const page = req.query.pg ? +req.query.pg : 1;
 			const limit = req.query.ltd ? +req.query.ltd : CONST.PAGE_LIMIT;
-			console.log(page);
+			const offset = req.query.offset ? +req.query.offset : 0;
+			const orderer = req.query.sortBy ? req.query.sortBy : null;
+			const order = req.query.orderBy ? req.query.orderBy : null;
+			const query = !orderer ? $sql.queryAll : (order === 'DESC' ? $sql.queryAllOrderDESC : $sql.queryAllOrderASC);
+
 			connection.query($sql.queryAllCnt, function(err, result) {
 				const count = result[0]['count(*)'];
-				connection.query($sql.queryAll, $service.getOpts(limit, page), function(err, result) {
-          result = $service.getList(result, count, page, limit);
-					console.log(result);
+
+				connection.query(query, $service.getOpts(limit, offset, orderer), function(err, result) {
+          result = $service.getList(result, count, offset, limit);
 					jsonWrite(res, result, err);
 					connection.release();
 				});
