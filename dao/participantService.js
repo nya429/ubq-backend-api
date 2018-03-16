@@ -37,7 +37,26 @@ module.exports = {
     return {participants: result, count: count, offset: offset, limit: limit}
 	},
 
-	getOpts: function (limit, offset, orderer, ) {
+	setOpts: function (limit, offset, orderer, ) {
 		return orderer ? [orderer, limit, offset] : [limit, offset];
+	},
+
+	setKeyOpts: function (limit, offset, orderer, term) {
+		return orderer ? _.concat(term, orderer, limit, offset) : _.concat(term, limit, offset);
+	},
+
+	parseTerm: function (term) {
+		// key.replace("[", "[[]").replace("_","[_]").replace("%","[%]");
+		console.log(term);
+		term = _.trim(term);
+		const array = term.length > 0 ? _.words(term): '';
+		if(array.length > 1) {
+			console.log([`%${array[0]}%`, array[1].length < 2 ? '' : `%${array[1]}%`, `%${term}%`, `%${term}%`]);
+			return [ array[0].length < 2 ? '' : `%${array[0]}%`,array[1].length < 2 ? '' : `%${array[1]}%`, `%${term}%`, `%${term}%`];
+		} else {
+			term = `%${term}%`;
+			console.log([term, term, term, term]);
+			return [term, term, term, term];
+		}
 	}
 };

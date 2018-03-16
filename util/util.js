@@ -11,10 +11,11 @@ const jsonWrite = function (res, rst, err) {
 		});
 	} else {
     if(rst) {
-      rst = {
-		          code: 0,
+			const data = 'message' in rst ? rst.message : rst;
+     rst = {
+		          code: CONST.SUCCESS,
 							msg: 'success',
-							data: rst
+							data: data
              };
 		 }
 		res.json(rst);

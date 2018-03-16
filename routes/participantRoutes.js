@@ -7,10 +7,9 @@ router.post('/new', function(req, res, next) {
 	participantDao.add(req, res, next);
 });
 
-// router.get('/search?', function(req, res, next) {
-// 	console.log('here')
-// 	participantDao.searchByKeyword(req, res, next);
-// });
+router.get('/search?', function(req, res, next) {
+	participantDao.searchByKeyword(req, res, next);
+});
 
 router.get('/list', function(req, res, next) {
 	participantDao.getAll(req, res, next);

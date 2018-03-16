@@ -65,7 +65,7 @@ module.exports = {
 			connection.query($sql.queryAllCnt, function(err, result) {
 				const count = result[0]['count(*)'];
 
-				connection.query(query, $service.getOpts(limit, offset, orderer), function(err, result) {
+				connection.query(query, $service.setOpts(limit, offset, orderer), function(err, result) {
           result = $service.getList(result, count, offset, limit);
 					jsonWrite(res, result, err);
 					connection.release();
@@ -78,12 +78,12 @@ module.exports = {
   getByParticipantById: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
 				let companyId = req.query.companyId;
-				const page = req.query.pg || 1;
+				const offset = req.query.offset ? +req.query.offset : 0;
 				const limit = req.query.ltd || CONST.PAGE_LIMIT ;
 				connection.query($sql.queryByCidCnt, companyId, function(err, result) {
 				const count = result[0]['count(*)'];
 				connection.query($sql.queryByCid, companyId, function(err, result) {
-					result = $service.getList(result, count, page, limit);
+					result = $service.getList(result, count, offset, limit);
 					jsonWrite(res, result, err);
 					connection.release();
 				});
@@ -93,14 +93,18 @@ module.exports = {
 
 	searchByKeyword: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
-				let key = `%${req.query.key}%` || '';
-				// key.replace("[", "[[]").replace("_","[_]").replace("%","[%]");
-				const page = req.query.pg || 1;
-				const limit = req.query.ltd || CONST.PAGE_LIMIT ;
-				connection.query($sql.queryAllCnt, function(err, result) {
+				const term = $service.parseTerm(req.query.term);
+
+				const limit = req.query.ltd ? +req.query.ltd : CONST.PAGE_LIMIT;
+				const offset = req.query.offset ? +req.query.offset : 0;
+				const orderer = req.query.sortBy ? req.query.sortBy : null;
+				const order = req.query.orderBy ? req.query.orderBy : null;
+				const $query = !orderer ? $sql.queryByKeyword : (order === 'DESC' ? $sql.queryByKeywordOrderDESC : $sql.queryByKeywordOrderASC);
+
+				connection.query($sql.queryByKeywordCnt, term, function(err, result) {
 				const count = result[0]['count(*)'];
-				connection.query($sql.queryByKeyword, [key, key, key], function(err, result) {
-					result = $service.getList(result, count, page, limit);
+				connection.query($query, $service.setKeyOpts(limit, offset, orderer, term), function(err, result) {
+					result = $service.getList(result, count, offset, limit);
 					jsonWrite(res, result, err);
 					connection.release();
 				});
