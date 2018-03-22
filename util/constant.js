@@ -8,6 +8,10 @@ const CONST = {
   *@const pagination
   */
   PAGE_LIMIT: 10,
+  /**
+  *@const search
+  */
+  SEARCH_LIMIT: 5,
 
 };
 

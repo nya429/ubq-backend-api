@@ -11,6 +11,7 @@ const companys = require('./routes/companyRoutes');
 const participants = require('./routes/participantRoutes');
 const vendors = require('./routes/vendorRoutes');
 const products = require('./routes/productRoutes');
+const event = require('./routes/eventRoutes');
 const logger = require('./log/logger');
 const app = express();
 
@@ -42,6 +43,7 @@ app.use('/company', companys);
 app.use('/participant', participants);
 app.use('/vendor', vendors);
 app.use('/product', products);
+app.use('/event', event);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,7 +4,7 @@ const participant = {
 	update:'update participant set company_id=?, tag_id=?, first_name=?, last_name=?, company_name=?, job_title=?, email=?, phone=?, avatar_uri=?, priority_status=?, update_time=? where participant_id=?',
 	delete: 'delete from participant where participant_id=?',
 	queryById: 'select * from participant where participant_id=?',
-	queryAll: "select * from participant limit ? offset ?",
+	queryAll: "select * from participant order by create_time DESC limit ? offset ?",
 	queryAllOrderASC: "select * from participant order by ?? limit ? offset ? ",
 	queryAllOrderDESC: "select * from participant order by ?? DESC limit ? offset ? ",
 	queryAllCnt: 'select count(*) from participant',
