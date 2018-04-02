@@ -7,7 +7,7 @@ router.post('/new', function(req, res, next) {
 	participantDao.add(req, res, next);
 });
 
-router.get('/search?', function(req, res, next) {
+router.get('/lookup?', function(req, res, next) {
 	participantDao.searchByKeyword(req, res, next);
 });
 
@@ -16,7 +16,7 @@ router.get('/list', function(req, res, next) {
 });
 
 router.get('/list?', function(req, res, next) {
-	participantDao.getByParticipantById(req, res, next);
+	participantDao.getByParticipantByCompanyId(req, res, next);
 });
 
 router.get('/:id', function(req, res, next) {

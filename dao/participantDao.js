@@ -4,6 +4,7 @@ const mysql = require('mysql');
 const $conf = require('../conf/mysql');
 const { jsonWrite } = require('../util/util');
 const $sql = require('./participantSqlMapping');
+const $companysql = require('./companySqlMapping');
 const $service = require('./participantService');
 const CONST = require('../util/constant');
 
@@ -13,10 +14,21 @@ module.exports = {
 	add: function (req, res, next) {
 			pool.getConnection(function(err, connection) {
 				const param = req.body;
-				connection.query($sql.insert, $service.addOne(param), function(err, result) {
-					connection.release();
-          jsonWrite(res, result, err);
-				});
+				if (param.companyId.length > 0) {
+					connection.query($sql.insert, $service.addOne(param), function(err, result) {
+						connection.release();
+						jsonWrite(res, result, err);
+					});
+				} else {
+					connection.query($companysql.insert, $service.addTempCompany(param), function(err, result) {
+						param.companyId = result['insertId'];
+						connection.query($sql.insert, $service.addOne(param), function(err, result) {
+							connection.release();
+							jsonWrite(res, result, err);
+						});
+					});
+				}
+
 
 			});
 	},
@@ -75,7 +87,7 @@ module.exports = {
 	},
 
 
-  getByParticipantById: function (req, res, next) {
+  getByParticipantByCompanyId: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
 				let companyId = req.query.companyId;
 				const offset = req.query.offset ? +req.query.offset : 0;

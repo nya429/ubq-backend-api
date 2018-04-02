@@ -27,8 +27,10 @@ module.exports = {
 			const id = +req.params.id;
 			const param = req.body;
 			connection.query($sql.update, $service.update(param, id), function(err, result) {
-				jsonWrite(res, result, err);
-				connection.release();
+				connection.query($pSql.updateCompanyNameBatch, [param.name, id], function(err, result) {
+				  jsonWrite(res, result, err);
+			  	connection.release();
+				});
 			});
 		});
 	},
@@ -59,12 +61,17 @@ module.exports = {
 
 	getAll: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
-			const page = req.query.pg || 1;
-			const limit = req.query.ltd || CONST.PAGE_LIMIT  ;
+
+			const limit = req.query.ltd ? +req.query.ltd : CONST.PAGE_LIMIT;
+			const offset = req.query.offset ? +req.query.offset : 0;
+			const orderer = req.query.sortBy ? req.query.sortBy : null;
+			const order = req.query.orderBy ? req.query.orderBy : null;
+
 			connection.query($sql.queryAllCnt, function(err, result) {
 				const count = result[0]['count(*)'];
-				connection.query($sql.queryAll, function(err, result) {
-          result = $service.getList(result, count, page, limit);
+
+				connection.query($sql.queryAll, $service.setOpts(limit, offset, orderer), function(err, result) {
+          result = $service.getList(result, count, offset, limit);
 					jsonWrite(res, result, err);
 					connection.release();
 				});
@@ -87,6 +94,18 @@ module.exports = {
 				});
 			})
 		});
+	},
+
+	searchByName: function (req, res, next) {
+		pool.getConnection(function(err, connection) {
+				let name = `%${req.query.name}%` || '';
+				const limit = CONST.SEARCH_LIMIT ;
+
+				connection.query($sql.queryByName, $service.setKeyOpts(name, limit), function(err, result) {
+					jsonWrite(res, result, err);
+					connection.release();
+				});
+			})
 	},
 
 };

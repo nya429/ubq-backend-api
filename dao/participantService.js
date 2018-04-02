@@ -52,11 +52,21 @@ module.exports = {
 		const array = term.length > 0 ? _.words(term): '';
 		if(array.length > 1) {
 			console.log([`%${array[0]}%`, array[1].length < 2 ? '' : `%${array[1]}%`, `%${term}%`, `%${term}%`]);
-			return [ array[0].length < 2 ? '' : `%${array[0]}%`,array[1].length < 2 ? '' : `%${array[1]}%`, `%${term}%`, `%${term}%`];
+			return [ array[0].length < 2 ? '' : `%${array[0]}%`,array[1].length < 2 ? '' : `%${array[1]}%`, `%${term}%`, `%${term}%`, `%${term}%`];
 		} else {
 			term = `%${term}%`;
 			console.log([term, term, term, term]);
-			return [term, term, term, term];
+			return [term, term, term, term, term];
 		}
-	}
+	},
+
+	addTempCompany: function (param) {
+				const firstName = param.firstName;
+				const lastName = param.lastName;
+				const companyName = param.companyName;
+				const phone = param.phone;
+				const email = param.email;
+				const current = Date.now();
+				return [companyName, null, null, null, null, null, null, null, null, firstName, lastName, phone, email, null, current, current];
+	},
 };

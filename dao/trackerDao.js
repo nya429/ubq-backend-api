@@ -70,7 +70,7 @@ module.exports = {
 
 	searchByKeyword: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
-				let key = `%${req.query.key}%` || '';
+				let key = `${req.query.key}%` || '';
 				const limit = CONST.SEARCH_LIMIT ;
 
 				connection.query($sql.queryByKeyword, $service.setKeyOpts(key, limit), function(err, result) {

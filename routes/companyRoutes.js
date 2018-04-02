@@ -4,11 +4,16 @@ const router = express.Router({mergeParams: true});
 const companyDao = require('../dao/companyDao');
 
 router.post('/new', function(req, res, next) {
+	console.log('add')
 	companyDao.add(req, res, next);
 });
 
 router.get('/search?', function(req, res, next) {
 	companyDao.searchByKeyword(req, res, next);
+});
+
+router.get('/lookup?', function(req, res, next) {
+	companyDao.searchByName(req, res, next);
 });
 
 router.get('/list?', function(req, res, next) {
@@ -24,8 +29,11 @@ router.delete('/:id', function(req, res, next) {
 });
 
 router.patch('/:id', function(req, res, next) {
+	console.log('update')
 	companyDao.update(req, res, next);
 });
+
+
 
 
 
