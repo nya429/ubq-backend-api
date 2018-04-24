@@ -7,6 +7,10 @@ router.post('/new', function(req, res, next) {
 	participantDao.add(req, res, next);
 });
 
+router.post('/list/filter', function(req, res, next) {
+	participantDao.searchByFilters(req, res, next);
+});
+
 router.get('/lookup?', function(req, res, next) {
 	participantDao.searchByKeyword(req, res, next);
 });

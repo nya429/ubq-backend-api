@@ -69,4 +69,18 @@ module.exports = {
 				const current = Date.now();
 				return [companyName, null, null, null, null, null, null, null, null, firstName, lastName, phone, email, null, current, current];
 	},
+
+	parseName: function(term) {
+		console.log(term);
+		term = _.trim(term);
+		const array = term.length > 0 ? _.words(term): '';
+		if(array.length > 1) {
+			console.log([`%${array[0]}%`, array[1].length < 2 ? '' : `%${array[1]}%`]);
+			return [ array[0].length < 2 ? '' : `%${array[0]}%`, array[1].length < 2 ? '' : `%${array[1]}%`];
+		} else {
+			term = `%${term}%`;
+			console.log([term, term]);
+			return [term, term];
+		}
+	}
 };

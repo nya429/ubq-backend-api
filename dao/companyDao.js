@@ -63,7 +63,7 @@ module.exports = {
 		pool.getConnection(function(err, connection) {
 
 			const limit = req.query.ltd ? +req.query.ltd : CONST.PAGE_LIMIT;
-			const offset = req.query.offset ? +req.query.offset : 0;
+			const offset = req.query.offset ? +req.query.offset : CONST.INDEX_0;
 			const orderer = req.query.sortBy ? req.query.sortBy : null;
 			const order = req.query.orderBy ? req.query.orderBy : null;
 

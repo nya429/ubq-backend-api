@@ -17,6 +17,8 @@ const participant = {
 	queryByKeyword: "select * from participant where (first_name like ?) or (last_name like ?) or (company_name like ?) or (email like ?) or (phone like ?) limit ? offset ?",
 	queryByKeywordOrderASC: "select * from participant where (first_name like ?) or (last_name like ?) or (company_name like ?) or (email like ?) or (phone like ?)  order by ?? limit ? offset ?",
 	queryByKeywordOrderDESC: "select * from participant where (first_name like ?) or (last_name like ?) or (company_name like ?) or (email like ?) or (phone like ?) order by ?? DESC limit ? offset ?",
+	queryByFilterCntPrefix: "select count(*) from participant where ((first_name like ?) or (last_name like ?))",
+  queryByFilterPrefix: "select * from participant where ((first_name like ?) or (last_name like ?))",
 };
 
 module.exports = participant;

@@ -69,7 +69,7 @@ module.exports = {
 		pool.getConnection(function(err, connection) {
 
 			const limit = req.query.ltd ? +req.query.ltd : CONST.PAGE_LIMIT;
-			const offset = req.query.offset ? +req.query.offset : 0;
+			const offset = req.query.offset ? +req.query.offset : CONST.INDEX_0;
 			const orderer = req.query.sortBy ? req.query.sortBy : null;
 			const order = req.query.orderBy ? req.query.orderBy : null;
 			const query = !orderer ? $sql.queryAll : (order === 'DESC' ? $sql.queryAllOrderDESC : $sql.queryAllOrderASC);
@@ -90,7 +90,7 @@ module.exports = {
   getByParticipantByCompanyId: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
 				let companyId = req.query.companyId;
-				const offset = req.query.offset ? +req.query.offset : 0;
+				const offset = req.query.offset ? +req.query.offset : CONST.INDEX_0;
 				const limit = req.query.ltd || CONST.PAGE_LIMIT ;
 				connection.query($sql.queryByCidCnt, companyId, function(err, result) {
 				const count = result[0]['count(*)'];
@@ -108,7 +108,7 @@ module.exports = {
 				const term = $service.parseTerm(req.query.term);
 
 				const limit = req.query.ltd ? +req.query.ltd : CONST.PAGE_LIMIT;
-				const offset = req.query.offset ? +req.query.offset : 0;
+				const offset = req.query.offset ? +req.query.offset : CONST.INDEX_0;
 				const orderer = req.query.sortBy ? req.query.sortBy : null;
 				const order = req.query.orderBy ? req.query.orderBy : null;
 				const $query = !orderer ? $sql.queryByKeyword : (order === 'DESC' ? $sql.queryByKeywordOrderDESC : $sql.queryByKeywordOrderASC);
@@ -121,6 +121,40 @@ module.exports = {
 					connection.release();
 				});
 			})
+		});
+	},
+
+	searchByFilters: function (req, res, next) {
+		pool.getConnection(function(err, connection) {
+
+			const param = req.body;
+			const companyId = +param.companyId;
+			const term = $service.parseName(param.term);
+			const priorityStatus = +param.priority;
+
+			let $queryFilter = companyId !== 0 ? ` and company_id = ${companyId}` : '';
+			$queryFilter = $queryFilter + (priorityStatus !== 0 ? ` and priority_status = ${priorityStatus}` : '');
+
+			const limit = req.query.ltd ? +req.query.ltd : CONST.PAGE_LIMIT;
+			const offset = req.query.offset ? +req.query.offset : CONST.INDEX_0;
+			const orderer = req.query.sortBy ? req.query.sortBy : null;
+			const order = req.query.orderBy ? req.query.orderBy : null;
+
+			let $queryCon = orderer ? ` order by ${orderer}` : ` order by update_time`;
+			$queryCon = $queryCon + (order ? ` ${order}` : ' DESC');
+			$queryCon = $queryCon + ` limit ${limit} offset ${offset}`;
+
+			const $queryCnt = $sql.queryByFilterCntPrefix + $queryFilter;
+			const $query = $sql.queryByFilterPrefix + $queryFilter + $queryCon;
+
+			connection.query($queryCnt, term, function(err, result) {
+			const count = result[0]['count(*)'];
+				connection.query($query, term, function(err, result) {
+					result = $service.getList(result, count, offset, limit);
+					jsonWrite(res, result, err);
+					connection.release();
+				});
+			});
 		});
 	},
 
