@@ -31,10 +31,18 @@ module.exports = {
     return {trackers: result, count: count, page: pg, limit: limit}
 	},
 
+	getTrackers: function (result) {
+		if (!result) return;
+		return {trackers: result}
+	},
+
 	setKeyOpts: function (key, limit) {
 		return  _.concat(key, limit);
 	},
 
-
-
+	pullCustomerId: function(locs) {
+		const tagIdArray = _.flatMap(locs, loc =>  [loc.customer_id]);
+		// return `${tagIdArray.join()}`;
+		return tagIdArray;
+	},
 };

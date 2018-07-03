@@ -130,6 +130,7 @@ module.exports = {
 			const param = req.body;
 			const companyId = +param.companyId;
 			const term = $service.parseName(param.term);
+			console.log(param)
 			const priorityStatus = +param.priority;
 
 			let $queryFilter = companyId !== 0 ? ` and company_id = ${companyId}` : '';
@@ -148,6 +149,7 @@ module.exports = {
 			const $query = $sql.queryByFilterPrefix + $queryFilter + $queryCon;
 
 			connection.query($queryCnt, term, function(err, result) {
+			if (err) return console.log(err);
 			const count = result[0]['count(*)'];
 				connection.query($query, term, function(err, result) {
 					result = $service.getList(result, count, offset, limit);

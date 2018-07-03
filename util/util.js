@@ -22,4 +22,9 @@ const jsonWrite = function (res, rst, err) {
 	}
 };
 
+// TODO: error handle
+const errHandle = function(res, err) {
+	
+}
+
 module.exports = { jsonWrite };

@@ -12,6 +12,14 @@ router.get('/tracker/valid?', function(req, res, next) {
 	trackerDao.isTrackerValid(req, res, next);
 });
 
+router.post('/tracker/locs', function(req, res, next) {
+	trackerDao.getTrackerLocsByTime(req, res, next);
+});
+
+router.get('/tracker/lastActive', function(req, res, next) {
+	trackerDao.getLastActivedTrackers(req, res, next);
+});
+
 //exist?
 router.get('/tracker/:id', function(req, res, next) {
 	trackerDao.getOne(req, res, next);

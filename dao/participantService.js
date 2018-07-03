@@ -74,6 +74,7 @@ module.exports = {
 		console.log(term);
 		term = _.trim(term);
 		const array = term.length > 0 ? _.words(term): '';
+		console.log(term);
 		if(array.length > 1) {
 			console.log([`%${array[0]}%`, array[1].length < 2 ? '' : `%${array[1]}%`]);
 			return [ array[0].length < 2 ? '' : `%${array[0]}%`, array[1].length < 2 ? '' : `%${array[1]}%`];
