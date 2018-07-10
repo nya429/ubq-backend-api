@@ -28,11 +28,3 @@ const conf = {mysql: {
 }};
 
 module.exports = conf;
-
-// pool.getConnection(function(err, connection) {
-//     connection.query('SELECT * from USER', function(err, rows, fields) {
-//         connection.release();
-//         console.log('The solution is: ', rows[0]);
-//         if (err) throw err;
-//       });
-// });
