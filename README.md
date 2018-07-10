@@ -24,9 +24,9 @@ Install project by run:
 npm install
 ```
 
-## Running server
+## Start server
 
-Run
+To start server run:
 ```
 node bin/server.js
 ```
