@@ -13,6 +13,7 @@ const CONST = {
   *@const search
   */
   SEARCH_LIMIT: 5,
+  SETTING_LIMIT: 15,
 
 };
 
