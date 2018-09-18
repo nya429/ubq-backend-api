@@ -14,6 +14,8 @@ module.exports = {
 				if (err) throw err;
 				const param = req.body;
 				connection.query($sql.insert, $service.addOne(param), function(err, result) {
+          if (err) throw err;
+          result = {setting_id: result['insertId']};
 					connection.release();
           jsonWrite(res, result, err);
 				});
@@ -89,7 +91,15 @@ module.exports = {
     });
   },
 
-  isRemovable: function() {
-
-  }
+  getIdByKey: function(req, res, next) {
+    pool.getConnection(function(err, connection) {
+      const key = req.body.key;
+      connection.query($sql.queryIdByKey, key, function(err, result) {
+        const id = result[0];
+        result = {setting_id: id};
+        jsonWrite(res, result, err);
+        connection.release();
+      });
+    });
+  },
 };

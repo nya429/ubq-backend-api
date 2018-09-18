@@ -7,10 +7,11 @@ module.exports = {
         return [key, value];
 	},
 
+  // cannot update key
   update: function (param, settingId) {
     const value = param.value;
     const key = param.key;
-    return [key, value, settingId];
+    return [value, settingId];
   },
 
   getList: function(result, count, offset, limit) {

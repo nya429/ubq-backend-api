@@ -6,6 +6,7 @@ const setting = {
   queryAllCnt: 'select count(*) from setting_universal',
   queryById: 'select * from setting_universal where setting_id=?',
   queryKeyCnt: 'select count(*) from setting_universal where setting_key=?',
+  queryIdByKey: 'select setting_id from setting_universal where setting_key=?',
 }
 
 module.exports = setting;
