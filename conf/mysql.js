@@ -18,7 +18,7 @@ const mysql = require('mysql');
 //   password : '8888'
 // }};
 
-aws_rds
+//aws_rds
 const conf = {mysql: {
   connectionLimit : 10,
   host     : 'ubq-ems-db.cpzqoyxyhoka.us-east-2.rds.amazonaws.com',
