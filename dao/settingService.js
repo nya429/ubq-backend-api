@@ -22,4 +22,11 @@ module.exports = {
   setOpts: function (limit, offset, orderer, ) {
     return orderer ? [orderer, limit, offset] : [limit, offset];
   },
+
+  intoString: function(keys) {
+    console.log(keys)
+    let str =  keys.join("','");
+    console.log(str);
+    return str;
+  }
 }

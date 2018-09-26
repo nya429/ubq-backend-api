@@ -7,6 +7,10 @@ router.post('/new', function(req, res, next) {
 	settingDao.add(req, res, next);
 });
 
+router.post('/populate', function(req, res, next) {
+	settingDao.populate(req, res, next);
+});
+
 router.get('/list', function(req, res, next) {
 	settingDao.getAll(req, res, next);
 });

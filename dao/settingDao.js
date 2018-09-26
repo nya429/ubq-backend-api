@@ -102,4 +102,20 @@ module.exports = {
       });
     });
   },
+
+  populate: function(req, res, next) {
+    pool.getConnection(function(err, connection) {
+      const settings = req.body;
+      const keys = settings.map(setting => setting['_key']);
+      const sql = $sql.queryByKeys.replace('?', `'${$service.intoString(keys)}'`)
+
+      let query = connection.query(sql, function(err, result) {
+        console.log(query.sql)
+        console.log('result', result)
+        result = {setting_id: ''};
+        jsonWrite(res, result, err);
+        connection.release();
+      });
+    });
+  },
 };
