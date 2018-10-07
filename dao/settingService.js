@@ -2,15 +2,15 @@ const _ = require('lodash');
 
 module.exports = {
   addOne: function (param) {
-        const value = param.value;
-        const key = param.key;
+        const value = param.value.trim();
+        const key = param.key.trim();
         return [key, value];
 	},
 
   // cannot update key
   update: function (param, settingId) {
-    const value = param.value;
-    const key = param.key;
+    const value = param.value.trim();
+    const key = param.key.trim();
     return [value, settingId];
   },
 
@@ -24,9 +24,17 @@ module.exports = {
   },
 
   intoString: function(keys) {
-    console.log(keys)
     let str =  keys.join("','");
-    console.log(str);
     return str;
+  },
+
+  populateString: function(settings, sql) {
+    let sqls = settings.map(setting => {
+      const key = setting['_key'];
+      const value = setting['_value'];
+      return sql(key, value);
+    });
+
+    return sqls.join(';');
   }
 }

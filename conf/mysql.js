@@ -28,4 +28,3 @@ const conf = {mysql: {
 // }};
 
 module.exports = conf;
-``
