@@ -12,7 +12,7 @@ router.post('/default', function(req, res, next) {
 });
 
 router.post('/populate', function(req, res, next) {
-	settingDao.populate(req, res, next);
+	settingDao.populateDefaultSettings(req, res, next);
 });
 
 router.post('/restore', function(req, res, next) {
