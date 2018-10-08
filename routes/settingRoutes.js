@@ -7,8 +7,16 @@ router.post('/new', function(req, res, next) {
 	settingDao.add(req, res, next);
 });
 
+router.post('/default', function(req, res, next) {
+	settingDao.ifDefaultSettingsExist(req, res, next);
+});
+
 router.post('/populate', function(req, res, next) {
 	settingDao.populate(req, res, next);
+});
+
+router.post('/restore', function(req, res, next) {
+	settingDao.resotreDefaultSettings(req, res, next);
 });
 
 router.get('/list', function(req, res, next) {

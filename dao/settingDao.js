@@ -8,7 +8,7 @@ const CONST = require('../util/constant');
 
 const pool  = mysql.createPool($conf.mysql);
 
-module.exports = {
+const self = module.exports = {
   add: function (req, res, next) {
 			pool.getConnection(function(err, connection) {
 				if (err) throw err;
@@ -103,36 +103,49 @@ module.exports = {
     });
   },
 
-  ifDefaultSettingsExist: function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-      const settings = req.body;
-      console.log(settings)
-      const keys = settings.map(setting => setting['_key']);
-      const sql = $sql.queryByKeys.replace('?', `'${$service.intoString(keys)}'`)
-      let query = connection.query(sql, function(err, result) {
-        // console.log(query.sql)
-        // console.log('result', result)
-        jsonWrite(res, result, err);
-        connection.release();
-      });
-    });
-  },
-
-  populate: function(req, res, next) {
+  populateDefaultSettings: function(req, res, next) {
     let bulkConf = $conf.mysql;
     bulkConf['multipleStatements'] = true;
     const bulkConnection = mysql.createConnection(bulkConf);
     const settings = req.body;
     const $sqls = $service.populateString(settings, $sql.populate);
-    console.log($sqls)
     let query = bulkConnection.query($sqls, function (err, results, fields) {
        if (err) {
-         console.log(query.sql)
          return console.error(err);
        }
-       console.log(results);
        jsonWrite(res, results, err);
        bulkConnection.end();
      })
   },
+
+  ifDefaultSettingsExist: function(req, res, next) {
+    pool.getConnection(function(err, connection) {
+      const settings = req.body;
+      const keys = settings.map(setting => setting['_key']);
+      const sql = $sql.queryByKeys.replace('?', `'${$service.intoString(keys)}'`)
+      let query = connection.query(sql, function(err, result) {
+        if(settings.length === result.length) {
+          jsonWrite(res, result, err);
+        } else {
+          self.populateDefaultSettings(req, res, next);
+        }
+        connection.release();
+      });
+    });
+  },
+
+  resotreDefaultSettings: function(req, res, next) {
+    let bulkConf = $conf.mysql;
+    bulkConf['multipleStatements'] = true;
+    const bulkConnection = mysql.createConnection(bulkConf);
+    const settings = req.body;
+    const $sqls = $service.populateString(settings, $sql.restore);
+    let query = bulkConnection.query($sqls, function (err, results, fields) {
+       if (err) {
+         return console.error(err);
+       }
+       jsonWrite(res, results, err);
+       bulkConnection.end();
+     })
+  }
 };

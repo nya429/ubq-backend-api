@@ -1,22 +1,22 @@
 /*jslint esversion:6 */
 const mysql = require('mysql');
 //mac local
-const conf = {mysql: {
-  connectionLimit : 10,
-  host     : 'localhost',
-  user     : 'root',
-  database : 'ubq_ems_db',
-  password : 'bsg'
-}};
-
-//win local
 // const conf = {mysql: {
 //   connectionLimit : 10,
 //   host     : 'localhost',
 //   user     : 'root',
 //   database : 'ubq_ems_db',
-//   password : '8888'
+//   password : 'bsg'
 // }};
+
+// win local
+const conf = {mysql: {
+  connectionLimit : 10,
+  host     : 'localhost',
+  user     : 'root',
+  database : 'ubq_ems_db',
+  password : '8888'
+}};
 
 //aws_rds
 // const conf = {mysql: {
