@@ -8,7 +8,7 @@ const setting = {
   queryKeyCnt: 'select count(*) from setting_universal where setting_key=?',
   queryIdByKey: 'select setting_id from setting_universal where setting_key=?',
   queryByKeys: 'select * from setting_universal where setting_key in (?)',
-  populate: function(key, ) {
+  populate: function(key, value) {
     return `insert into setting_universal (setting_key, setting_value) select * from (select '${key}', '${value}') as tmptable where not exists (select * from setting_universal where setting_key = '${key}')`;
   },
   restore: function(key, value) {
