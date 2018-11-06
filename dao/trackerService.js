@@ -45,4 +45,9 @@ module.exports = {
 		// return `${tagIdArray.join()}`;
 		return tagIdArray;
 	},
+
+	intoString: function(keys) {
+		let str =  keys.join("','");
+		return str;
+	  },
 };

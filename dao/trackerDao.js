@@ -167,10 +167,29 @@ module.exports = {
 			});
 		})
 	},
-  /**
-   *  return min and max timestamp
+	  
+	/**
+   	*  return min and max timestamp
 	*/
 	getTrackerLocHisById: function(req, res, next) {
 
 	},
+
+	  /**
+    *  return locs and time, based on custom_id
+	*/
+	getLastLoctionsByIds: function(req, res, next) {
+		pool.getConnection(function(err, connection) {
+			if (err) throw err;
+			const ids = req.body;
+			const sql = $sql.queryLastLocationsByIds.replace('?', `'${$service.intoString(ids)}'`)
+			connection.query(sql, function(err, result) {
+				if (err) throw err;
+				let trackers = result;
+				jsonWrite(res, result, err);
+				connection.release();
+				});
+		});
+	}
+	
 };
