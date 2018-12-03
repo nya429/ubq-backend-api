@@ -12,8 +12,12 @@ router.get('/tracker/valid?', function(req, res, next) {
 	trackerDao.isTrackerValid(req, res, next);
 });
 
-router.post('/tracker/locs', function(req, res, next) {
+router.post('/tracker/locs/span', function(req, res, next) {
 	trackerDao.getTrackerLocsByTime(req, res, next);
+});
+
+router.post('/tracker/locs/current', function(req, res, next) {
+	trackerDao.getLastLoctionsByIds(req, res, next);
 });
 
 router.get('/tracker/lastActive', function(req, res, next) {

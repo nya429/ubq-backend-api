@@ -116,9 +116,9 @@ module.exports = {
 
   /**
   *   get location by given
-	    begin ? start time : min
+	        begin ? start time : min
 			end ? end : max
-			speickfic time ? time +_ ??period : null;
+			speickfic time ? time +_ ?? period : null;
   */
 	getTrackerLocsByTime: function(req, res, next) {
 		pool.getConnection(function(err, connection) {
@@ -155,7 +155,7 @@ module.exports = {
 		pool.getConnection(function(err, connection) {
 			if (err) throw err;
 			connection.query($sql.queryLastActive, limit, function(err, result) {
-	      if (err) throw err;
+	        if (err) throw err;
 				let trackers = result;
 				connection.query($pSql.queryByTagIds, [$service.pullCustomerId(result)], function(err, result) {
 					if (err) throw err;
@@ -181,12 +181,15 @@ module.exports = {
 	getLastLoctionsByIds: function(req, res, next) {
 		pool.getConnection(function(err, connection) {
 			if (err) throw err;
-			const ids = req.body;
+			const ids = req.body.ids;
 			const sql = $sql.queryLastLocationsByIds.replace('?', `'${$service.intoString(ids)}'`)
 			connection.query(sql, function(err, result) {
 				if (err) throw err;
 				let trackers = result;
-				jsonWrite(res, result, err);
+				trackers = result.map(tracker => 
+					{return {[tracker['customer_id']] : tracker }}
+				);
+				jsonWrite(res, trackers, err);
 				connection.release();
 				});
 		});

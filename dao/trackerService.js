@@ -47,7 +47,12 @@ module.exports = {
 	},
 
 	intoString: function(keys) {
+		try {
 		let str =  keys.join("','");
-		return str;
+			return str;
+		} 
+		catch (err) {
+			console.error(err);
+		}
 	  },
 };
