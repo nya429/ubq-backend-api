@@ -185,9 +185,9 @@ module.exports = {
 			const sql = $sql.queryLastLocationsByIds.replace('?', `'${$service.intoString(ids)}'`)
 			connection.query(sql, function(err, result) {
 				if (err) throw err;
-				let trackers = result;
-				trackers = result.map(tracker => 
-					{return {[tracker['customer_id']] : tracker }}
+				let trackers = new Object();
+				 result.forEach(tracker => 
+					trackers[`${tracker['customer_id']}`] = tracker 
 				);
 				jsonWrite(res, trackers, err);
 				connection.release();
