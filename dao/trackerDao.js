@@ -133,7 +133,7 @@ module.exports = {
 			////bulk select
       // const ids = req.body.ids;
       // let index = 0;
-			const $get = 'select customer_id, loc_x, loc_y, unix_timestamp(time) as time from simulation_data_1 where customer_id = ? and unix_timestamp(time) between (select unix_timestamp(min(time)) from simulation_data_1 where customer_id = ?) and (select unix_timestamp(max(time)) from simulation_data_1 where customer_id = ?)';
+			const $get = 'select customer_id, loc_x, loc_y, unix_timestamp(time) as time from simulation_data_2 where customer_id = ? and unix_timestamp(time) between (select unix_timestamp(min(time)) from simulation_data_1 where customer_id = ?) and (select unix_timestamp(max(time)) from simulation_data_1 where customer_id = ?)';
 
 			connection.query($get, [id, id, id], function(err, result) {
         if (err) throw err;
@@ -160,6 +160,7 @@ module.exports = {
 				connection.query($pSql.queryByTagIds, [$service.pullCustomerId(result)], function(err, result) {
 					if (err) throw err;
 					result = $service.getTrackers(result);
+					console.log(result);
 					jsonWrite(res, result, err);
 					connection.release();
 			 })
@@ -183,12 +184,14 @@ module.exports = {
 			if (err) throw err;
 			const ids = req.body.ids;
 			const sql = $sql.queryLastLocationsByIds.replace('?', `'${$service.intoString(ids)}'`)
+			console.log(sql)
 			connection.query(sql, function(err, result) {
 				if (err) throw err;
 				let trackers = new Object();
 				 result.forEach(tracker => 
 					trackers[`${tracker['customer_id']}`] = tracker 
 				);
+				console.log(trackers);
 				jsonWrite(res, trackers, err);
 				connection.release();
 				});
